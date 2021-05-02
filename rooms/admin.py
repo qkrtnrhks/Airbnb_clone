@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import mark_safe
 from . import models
 
 
@@ -25,14 +26,28 @@ class RoomAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "city", "price", "address")},
+            {
+                "fields": (
+                    "name",
+                    "description",
+                    "country",
+                    "city",
+                    "address",
+                    "price",
+                    "room_type",
+                )
+            },
         ),
         ("Times", {"fields": ("check_in", "check_out", "instant_book")}),
         (
             "More About the Space",
             {  # 접을 수 있는 섹션을 만들어줌
                 "classes": ("collapse",),
-                "fields": ("room_type", "amenities", "facilities", "house_rules"),
+                "fields": (
+                    "amenities",
+                    "facilities",
+                    "house_rules",
+                ),
             },
         ),
         ("Spaces", {"fields": ("guests", "beds", "bedrooms", "baths")}),
@@ -81,14 +96,23 @@ class RoomAdmin(admin.ModelAdmin):
         return obj.amenities.count()
         # room에서 amenities에 접근해 데이터들의 갯수를 리턴함(many to many로 연결되어 있기 때문에 가능)
 
+    count_amenities.short_description = "Amenity Count"
+
     def count_photos(self, obj):
         return obj.photos.count()
         # room에서 photos에 접근해 데이터들의 갯수를 리턴함(related_name="photos"로 연결되있기 때문에 가능, photos_set이 원래 명령어)
+
+    count_photos.short_description = "Photo Count"
 
 
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
 
-    """ Photo Admin Definition """
+    """ Phot Admin Definition """
 
-    pass
+    list_display = ("__str__", "get_thumbnail")
+
+    def get_thumbnail(self, obj):
+        return mark_safe(f'<img width="50px" src="{obj.file.url}" />')
+
+    get_thumbnail.short_description = "Thumbnail"

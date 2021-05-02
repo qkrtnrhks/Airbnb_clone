@@ -39,7 +39,10 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_PARTY_APPS = ["django_countries", "django_seed"]  # 다른사람이 만든 APPS,장고시드: 가짜데이터
+THIRD_PARTY_APPS = [
+    "django_countries",
+    "django_seed",
+]  # 다른사람이 만든 APPS,국가 불러오기,장고시드: 가짜데이터
 
 PROJECT_APPS = [
     "core.apps.CoreConfig",
@@ -135,3 +138,8 @@ STATIC_URL = "/static/"
 
 AUTH_USER_MODEL = "users.User"
 # AUTH_USER_MODEL = 'myapp.MyUser : django가 준 기본값 user model을 재정의 하기위해. (myapp이 설치된 상태(42)에서)
+
+
+MEDIA_ROOT = os.path.join(
+    BASE_DIR, "uploads"
+)  # 절대경로 (uploads추가한)생성. 이 경로로 파일을 저장해 파일(photo)을 Jdango가 찾을수 있게함

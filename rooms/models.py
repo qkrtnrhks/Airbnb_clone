@@ -54,7 +54,9 @@ class Photo(core_models.TimeStampedModel):
     """ Photo Model Definition """
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField()
+    file = models.ImageField(
+        upload_to="room_photos"
+    )  # uploads/room_photos폴더에 이미지가 업로드 됨
     room = models.ForeignKey(
         "Room", related_name="photos", on_delete=models.CASCADE
     )  # string타입이면 import안하고도 찾기가능
@@ -64,7 +66,7 @@ class Room(core_models.TimeStampedModel):
 
     """ Room Model Definition """
 
-    name = models.CharField(max_length=140)
+    name = models.CharField(max_length=15)
     description = models.TextField()
     country = CountryField()
     city = models.CharField(max_length=80)
@@ -99,6 +101,6 @@ class Room(core_models.TimeStampedModel):
         for review in all_reviews:
             all_ratings += review.rating_average()
         if len(all_reviews) > 0:
-            return round(all_ratings / len(all_reviews), 2)
+            return round(all_ratings / len(all_reviews), 2)  # 소숫점 몇째자리까지? 반올림 함수
         else:
             return 0

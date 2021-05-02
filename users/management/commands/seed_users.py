@@ -15,7 +15,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        number = options.get("number")
+        number = options.get("number")  # 명령어에서 숫자를 얻음
         seeder = Seed.seeder()
         seeder.add_entity(
             User,
@@ -26,4 +26,4 @@ class Command(BaseCommand):
             },
         )
         seeder.execute()
-        self.stdout.write(self.style.SUCCESS(f"{number} {NAME} created!"))
+        self.stdout.write(self.style.SUCCESS(f"{number} {NAME} created!"))  # 성공메시지

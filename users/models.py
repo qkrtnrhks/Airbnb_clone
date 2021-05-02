@@ -26,7 +26,9 @@ class User(AbstractUser):
 
     CURRENCY_CHOICES = ((CURRENCY_USD, "USD"), (CURRENCY_KRW, "KRW"))
     # field : html에서의 form으로 이해
-    avatar = models.ImageField(blank=True)  # 이미지form. pillow패키지 설치 해야 됨. form에서 blank허용
+    avatar = models.ImageField(
+        upload_to="avatars", blank=True
+    )  # 이미지form. pillow패키지 설치 해야 됨. form에서 blank허용.uploads/avatars폴더에 이미지가 업로드 됨
     gender = models.CharField(
         choices=GENDER_CHOICES, max_length=10, blank=True
     )  # 단어텍스트form. choices로 커스터마이징.

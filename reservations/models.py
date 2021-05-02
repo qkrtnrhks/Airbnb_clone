@@ -35,9 +35,9 @@ class Reservation(core_models.TimeStampedModel):
     def __str__(self):
         return f"{self.room} - {self.check_in}"  # 파이썬이므로 format 사용가능
 
-    def in_progress(self):
+    def in_progress(self):  # 메소드만들기
         now = timezone.now().date()
-        return now > self.check_in and now < self.check_out
+        return now >= self.check_in and now <= self.check_out
 
     in_progress.boolean = True  # true false를 o x 기호로 바꿔줌
 
